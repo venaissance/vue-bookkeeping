@@ -1,28 +1,47 @@
 <template>
-  <div>
-    <router-link to="/money">
-      <svg>
-        <use xlink:href="#money"/>
-      </svg>
+  <nav class="nav">
+    <router-link to="/money" class="item">
+      <Icon name="money"/>
       记账
     </router-link>
-    |
-    <router-link to="/labels">标签</router-link>
-    |
-    <router-link to="/statistics">统计</router-link>
-  </div>
+    <router-link to="/labels" class="item">
+      <Icon name="label"/>
+      标签
+    </router-link>
+    <router-link to="/statistics" class="item">
+      <Icon name="stat"/>
+      统计
+    </router-link>
+  </nav>
 </template>
 
 <script lang="ts">
-  // svg loader把svg变成symbol标签，再在外面套一个svg标签，最后把svg标签放到body里，用svg+use即可使用
-  import x from '@/assets/icons/money.svg';
 
-  console.log(x);
   export default {
     name: 'Nav'
   };
 </script>
 
 <style lang="scss" scoped>
+  .nav {
+    display: flex;
+    flex-direction: row;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+    font-size: 12px;
+
+    > .item {
+      width: 33.33333%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 2px 0;
+    }
+
+    .icon {
+      width: 32px;
+      height: 32px;
+    }
+  }
 
 </style>

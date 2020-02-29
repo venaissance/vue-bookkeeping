@@ -6,11 +6,9 @@
 
 
 <script lang="ts">
-  import Layout from '@/components/Layout.vue';
 
   export default {
-    name: 'Statistics',
-    components: {Layout}
+    name: 'Statistics'
   };
 </script>
 
