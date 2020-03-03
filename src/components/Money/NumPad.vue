@@ -1,29 +1,66 @@
 <template>
   <div class="numpad">
-    <div class="output">100</div>
+    <div class="output">{{output}}</div>
     <div class="buttons">
-      <button>1</button>
-      <button>2</button>
-      <button>3</button>
-      <button>删除</button>
-      <button>4</button>
-      <button>5</button>
-      <button>6</button>
-      <button>清空</button>
-      <button>7</button>
-      <button>8</button>
-      <button>9</button>
+      <button @click="inputNum">1</button>
+      <button @click="inputNum">2</button>
+      <button @click="inputNum">3</button>
+      <button @click="remove">删除</button>
+      <button @click="inputNum">4</button>
+      <button @click="inputNum">5</button>
+      <button @click="inputNum">6</button>
+      <button @click="empty">清空</button>
+      <button @click="inputNum">7</button>
+      <button @click="inputNum">8</button>
+      <button @click="inputNum">9</button>
       <button class="ok">OK</button>
-      <button class="zero">0</button>
-      <button>.</button>
+      <button class="zero" @click="inputNum">0</button>
+      <button @click="inputNum">.</button>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-  export default {
-    name: 'NumPad'
-  };
+  import Vue from 'vue';
+  import {Component} from 'vue-property-decorator';
+
+  @Component
+  export default class NumPad extends Vue {
+
+    output = '0';
+
+    inputNum(event: MouseEvent) {
+      const button = (event.target as HTMLButtonElement);
+      const input = button.textContent!;
+      if (this.output.length === 16) { return; }
+      if (this.output === '0') {
+        if ('0123456789'.indexOf(input) >= 0) {
+          this.output = input;
+        } else {
+          this.output += input;
+        }
+        return;
+      }
+      if (this.output.indexOf('.') >= 0 && input === '.') {
+        return;
+      }
+      this.output += input;
+    }
+
+    remove() {
+      if (this.output.length === 1) {
+        this.output = '0';
+      } else {
+        this.output = this.output.slice(0, -1)
+        ;
+      }
+    }
+
+    empty() {
+      this.output = '0';
+    }
+    
+  }
 </script>
 
 <style lang="scss" scoped>
