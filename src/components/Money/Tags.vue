@@ -31,16 +31,19 @@
     }
 
     newTag() {
-      const name = window.prompt('请输入标签名')!;
+      const name = window.prompt('请输入标签名');
+      if (name === null) return;
       if (name === '') {
         alert('标签不能为空哦~');
       } else if (this.dataSource && this.dataSource.includes(name)) {
         alert('标签已存在，请重新输入~');
-      } else if (this.dataSource) {
+      } else if (this.dataSource && name !== '') {
         this.$emit('update:dataSource', [...this.dataSource, name]);
+      } else {
+        return;
       }
     }
-    
+
   }
 </script>
 
