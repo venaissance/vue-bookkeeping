@@ -21,14 +21,17 @@
     type: string;
     notes: string;
     tags: string[];
+    createdAt?: Date; // 不强制初始化
   }
+
+  const recordList = JSON.parse(window.localStorage.getItem('recordList') || '[]');
 
   @Component({
     components: {NumPad, Types, Notes, Tags}
   })
   export default class Money extends Vue {
     tags = ['衣', '食', '住', '行', '彩票'];
-    recordList: Record[] = [];
+    recordList: Record[] = recordList;
 
     record: Record = {
       amount: 0,
@@ -46,13 +49,14 @@
     }
 
     onSaveRecord() {
-      const recordCopy = JSON.parse(JSON.stringify(this.record));
+      const recordCopy: Record = JSON.parse(JSON.stringify(this.record));
+      recordCopy.createdAt = new Date();
       this.recordList.push(recordCopy);
     }
 
     @Watch('recordList')
     onRecordListChange() {
-      window.localStorage.setItem('record', JSON.stringify(this.recordList));
+      window.localStorage.setItem('recordList', JSON.stringify(this.recordList));
     }
   }
 </script>
