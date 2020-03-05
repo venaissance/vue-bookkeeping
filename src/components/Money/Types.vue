@@ -9,11 +9,12 @@
 
 <script lang="ts">
   import Vue from 'vue';
-  import {Component} from 'vue-property-decorator';
+  import {Component, Prop} from 'vue-property-decorator';
 
   @Component
   export default class Types extends Vue {
-    type = '-';
+    @Prop() value!: string;
+    type = this.value;
 
     selectType(type: string) {
       if (type !== '+' && type !== '-') {
@@ -21,8 +22,9 @@
       } else {
         this.type = type;
       }
+      this.$emit('update:value', type);
     }
-    
+
   }
 </script>
 
