@@ -13,8 +13,9 @@
     font-family: $font-hei;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    font-size: 14px;
+    font-size: 16px;
     color: #333;
+    background: #f5f5f5;
   }
 
 </style>
