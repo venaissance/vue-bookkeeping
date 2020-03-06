@@ -28,7 +28,7 @@
       } else {
         this.selectedTags.push(tag);
       }
-      this.$emit('update:value', this.selectedTags)
+      this.$emit('update:value', this.selectedTags);
     }
 
     newTag() {
@@ -53,6 +53,8 @@
   .tags {
     font-size: 14px;
     padding: 16px;
+    background: white;
+    overflow: auto;
 
     .current {
       display: flex;
