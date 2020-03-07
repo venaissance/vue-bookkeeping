@@ -2,20 +2,6 @@ import createId from '@/lib/createId';
 
 const localStorageKeyName = 'tagList';
 
-type Tag = {
-  id: string;
-  name: string;
-}
-
-type TagListModel = {
-  data: Tag[];
-  fetch: () => Tag[];
-  create: (name: string) => 'duplicated' | 'success';
-  update: (id: string, name: string) => 'duplicated' | 'not found' | 'success';
-  remove: (id: string) => boolean;
-  save: () => void;
-}
-
 const tagListModel: TagListModel = {
   data: [],
   fetch() {
@@ -33,7 +19,6 @@ const tagListModel: TagListModel = {
     return 'success';
   },
   update(id, name) {
-
     const idList = this.data.map(item => item.id);
     if (idList.indexOf(id) >= 0) {
       const names = this.data.map(item => item.name);
