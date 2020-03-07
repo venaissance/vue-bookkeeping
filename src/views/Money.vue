@@ -50,7 +50,7 @@
 
     @Watch('recordList')
     onRecordListChange() {
-      store.saveRecord();
+      store.saveRecords();
     }
   }
 </script>
