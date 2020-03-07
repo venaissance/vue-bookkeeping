@@ -6,7 +6,7 @@
     <div class="notes">
       <FormItem field-name="备注" placeholder="在这里输入备注" @update:value="onUpdateNotes"/>
     </div>
-    <Tags :data-source.sync="tags" @update:value="onUpdateTags"/>
+    <Tags/>
   </Layout>
 </template>
 
@@ -19,14 +19,10 @@
   import Tags from '@/components/Money/Tags.vue';
   import store from '@/store/store';
 
-  // const recordList = store.recordList;
-  // const tagList = store.tagList;
-
   @Component({
     components: {FormItem, NumPad, Types, Tags}
   })
   export default class Money extends Vue {
-    tags = store.tagList;
     recordList: RecordItem[] = store.recordList;
 
     record: RecordItem = {
@@ -38,10 +34,6 @@
 
     onUpdateNotes(value: string) {
       this.record.notes = value;
-    }
-
-    onUpdateTags(value: string[]) {
-      this.record.tags = value;
     }
 
     onSaveRecord() {
