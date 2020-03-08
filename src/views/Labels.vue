@@ -19,16 +19,16 @@
   import Vue from 'vue';
   import {Component} from 'vue-property-decorator';
   import Button from '@/components/Button.vue';
-  import store from '@/store/store';
+  import oldStore from '@/store/oldStore';
 
   @Component({
     components: {Button}
   })
   export default class Labels extends Vue {
-    tags = store.tagList;
+    tags = oldStore.tagList;
 
     createTag() {
-      store.createTag();
+      oldStore.createTag();
     }
 
   }

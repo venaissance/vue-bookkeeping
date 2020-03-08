@@ -15,11 +15,11 @@
 <script lang="ts">
   import Vue from 'vue';
   import {Component} from 'vue-property-decorator';
-  import store from '@/store/store';
+  import oldStore from '@/store/oldStore';
 
   @Component
   export default class Tags extends Vue {
-    tagList = store.tagList;
+    tagList = oldStore.tagList;
     selectedTags: string[] = [];
 
 
@@ -34,7 +34,7 @@
     }
 
     newTag() {
-      store.createTag();
+      oldStore.createTag();
     }
 
   }
