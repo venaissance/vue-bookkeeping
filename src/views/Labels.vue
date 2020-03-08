@@ -19,16 +19,26 @@
   import Vue from 'vue';
   import {Component} from 'vue-property-decorator';
   import Button from '@/components/Button.vue';
-  import oldStore from '@/store/oldStore';
 
   @Component({
-    components: {Button}
+    components: {Button},
+    computed: {
+      tags() {
+        return this.$store.state.tagList;
+      }
+    }
+
   })
   export default class Labels extends Vue {
-    tags = oldStore.tagList;
+    // tags = oldStore.tagList;
+
+    created() {
+      this.$store.commit('fetchTags');
+    }
 
     createTag() {
-      oldStore.createTag();
+      this.$store.commit('createTag');
+      // oldStore.createTag();
     }
 
   }
