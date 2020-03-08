@@ -7,6 +7,8 @@
       <FormItem field-name="备注" placeholder="在这里输入备注" @update:value="onUpdateNotes"/>
     </div>
     <Tags :value.sync="record.tags"/>
+    <button @click="add">+1</button>
+    {{count}}
   </Layout>
 </template>
 
@@ -18,11 +20,19 @@
   import FormItem from '@/components/Money/FormItem.vue';
   import Tags from '@/components/Money/Tags.vue';
   import oldStore from '@/store/oldStore';
+  import Button from '@/components/Button.vue';
 
   @Component({
-    components: {FormItem, NumPad, Types, Tags}
+    components: {Button, FormItem, NumPad, Types, Tags},
+    computed: {
+      count() { return this.$store.state.count;}
+    }
   })
   export default class Money extends Vue {
+    add() {
+      this.$store.commit('add');
+    }
+
     recordList: RecordItem[] = oldStore.recordList;
 
     record: RecordItem = {
@@ -31,6 +41,7 @@
       notes: '',
       tags: []
     };
+
 
     onUpdateNotes(value: string) {
       this.record.notes = value;
