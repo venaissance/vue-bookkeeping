@@ -22,7 +22,6 @@
   import {Component} from 'vue-property-decorator';
   import FormItem from '@/components/Money/FormItem.vue';
   import Button from '@/components/Button.vue';
-  import oldStore from '@/store/oldStore';
 
   @Component({
     components: {Button, FormItem}
@@ -35,9 +34,7 @@
 
     created() {
       const id = this.$route.params.id;
-      // this.$store.commit('fetchTags');
       this.$store.commit('setCurrentTag', id);
-      // this.tag = oldStore.findTag(this.$route.params.id);
       if (!this.currentTag) {
         this.$router.replace('/404');
       }
@@ -48,19 +45,12 @@
     }
 
     update(name: string) {
-      if (this.currentTag) {
-        oldStore.updateTag(this.currentTag.id, name);
-      }
+      this.$store.commit('updateTag', {id: this.currentTag.id, name: name});
+      // oldStore.updateTag(this.currentTag.id, name);
     }
 
     remove() {
-      if (this.currentTag) {
-        if (oldStore.removeTag(this.currentTag.id)) {
-          this.$router.back();
-        } else {
-          window.alert('删除失败');
-        }
-      }
+      this.$store.commit('removeTag', this.currentTag.id);
     }
   }
 
