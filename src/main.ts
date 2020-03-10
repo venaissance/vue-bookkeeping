@@ -20,3 +20,10 @@ new Vue({
   store,
   render: h => h(App)
 }).$mount('#app');
+
+// 解决手机浏览初始不显示底部导航栏的问题
+window.onload = function () {
+  setTimeout(function () {
+    window.scrollTo(0, 200);
+  }, 0);
+};

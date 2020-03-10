@@ -46,7 +46,12 @@
 
     onSaveRecord() {
       // oldStore.createRecord(this.record);
-      this.$store.commit('createRecord', this.record);
+      if (!this.record.tags || this.record.tags.length === 0) {
+        window.alert('主人请至少选择一个标签哦~');
+      } else {
+        this.$store.commit('createRecord', this.record);
+        window.alert('记录保存成功，请前往底部导航-统计查看记录，继续坚持记账习惯哦~');
+      }
     }
 
     @Watch('recordList')

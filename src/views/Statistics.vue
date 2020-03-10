@@ -1,7 +1,7 @@
 <template>
   <Layout>
     <Tab :dataSource="typeList" class-prefix="stat" :value.sync="type"/>
-    <ol>
+    <ol v-if="groupedList && groupedList.length > 0">
       <li v-for="(group, index) in groupedList" :key="index">
         <h3 class="title">{{beautify(group.title)}}
           <span>￥{{group.total}}</span>
@@ -15,6 +15,9 @@
         </ol>
       </li>
     </ol>
+    <div v-else class="noRecords">
+      主人太懒了，一条{{typeText}}都没有
+    </div>
   </Layout>
 </template>
 
@@ -26,11 +29,12 @@
   import dayjs from 'dayjs';
   import clone from '@/lib/clone';
 
-
   @Component
   export default class Statistics extends Vue {
     type = '-';
     typeList = typeList;
+    // TODO 收入支出为空时显示没有对应记录
+    typeText: string = this.type === '+' ? '收入' : '支出';
 
     created() {
       this.$store.commit('fetchRecords');
@@ -46,30 +50,36 @@
 
     get groupedList() {
       const {recordList} = this;
-      if (recordList.length === 0) {return [];}
+      if (!recordList || recordList.length === 0) {return [];}
 
       const newList = clone(recordList)
         .filter((r: { type: string }) => r.type === this.type)
         .sort((a: { createdAt: string }, b: { createdAt: string }) => dayjs(b.createdAt).valueOf() - dayjs(a.createdAt).valueOf());
+      console.log('newList', newList);
 
       type Result = { title: string; total?: number; items: RecordItem[] }[]
-      const result: Result = [{title: dayjs(newList[0].createdAt).format('YYYY-MM-DD'), items: [newList[0]]}];
-      for (let i = 1; i < newList.length; i++) {
-        const current = newList[i];
-        const last = result[result.length - 1];
-        if (dayjs(last.title).isSame(dayjs(current.createdAt), 'day')) {
-          last.items.push(current);
-        } else {
-          result.push({title: dayjs(current.createdAt).format('YYYY-MM-DD'), items: [current]});
+      if (newList.length && newList.length > 0) {
+        console.log('hi');
+        const result: Result = [{title: dayjs(newList[0].createdAt).format('YYYY-MM-DD'), items: [newList[0]]}];
+        for (let i = 1; i < newList.length; i++) {
+          const current = newList[i];
+          const last = result[result.length - 1];
+          if (dayjs(last.title).isSame(dayjs(current.createdAt), 'day')) {
+            last.items.push(current);
+          } else {
+            result.push({title: dayjs(current.createdAt).format('YYYY-MM-DD'), items: [current]});
+          }
         }
+        result.map(group => {
+          group.total = group.items.reduce((sum, item) => {
+            return sum + item.amount;
+          }, 0);
+        });
+        return result;
+      } else {
+        return [];
       }
-      result.map(group => {
-        group.total = group.items.reduce((sum, item) => {
-          return sum + item.amount;
-        }, 0);
-      });
-      console.log(result);
-      return result;
+
     }
 
     beautify(date: string) {
@@ -90,6 +100,25 @@
 
 <style lang="scss" scoped>
   @import "~@/assets/styles/helper.scss";
+
+  ::v-deep li.stat-tabItem {
+    height: 48px;
+    font-family: $font-hei;
+
+    &.selected {
+      background: white;
+
+      &::after {
+        display: none;
+      }
+    }
+  }
+
+  .noRecords {
+    text-align: center;
+    padding: 50px 20px;
+
+  }
 
   %item {
     padding: 8px 16px;
@@ -115,18 +144,6 @@
     color: #999;
   }
 
-  ::v-deep li.stat-tabItem {
-    height: 48px;
-    font-family: $font-hei;
-
-    &.selected {
-      background: white;
-
-      &::after {
-        display: none;
-      }
-    }
-  }
 
 </style>
 

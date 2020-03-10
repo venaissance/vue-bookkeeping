@@ -26,7 +26,6 @@
     selectType(item: DataSourceItem) {
       this.$emit('update:value', item.value);
     }
-
   }
 </script>
 
