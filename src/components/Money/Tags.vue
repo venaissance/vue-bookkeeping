@@ -1,14 +1,14 @@
 <template>
   <div class="tags">
+    <div class="new">
+      <button @click="newTag">新增标签</button>
+    </div>
     <ul class="current">
       <li v-for="tag in tagList" :key="tag.id"
           :class="{selected: selectedTags.indexOf(tag) >= 0}"
           @click="toggle(tag)">{{tag.name}}
       </li>
     </ul>
-    <div class="new">
-      <button @click="newTag">新增标签</button>
-    </div>
   </div>
 </template>
 
@@ -44,6 +44,9 @@
     padding: 16px;
     background: white;
     overflow: auto;
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column-reverse;
 
     .current {
       display: flex;

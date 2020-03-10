@@ -1,15 +1,13 @@
 <template>
   <Layout>
-    <Tab class-prefix="stat"
-         :data-source="typeList"
-         :value.sync="type"/>
+    <Tab :dataSource="typeList" class-prefix="stat" :value.sync="type"/>
     <ol>
       <li v-for="(group, index) in result" :key="index">
         <h3 class="title">{{group.title}}</h3>
         <ol>
           <li v-for="item in group.items" :key="item.id" class="record">
             <span>{{tagString(item.tags)}}</span>
-            <span>{{item.notes}}</span>
+            <span class="notes">{{item.notes}}</span>
             <span>￥{{item.amount}}</span>
           </li>
         </ol>
@@ -24,22 +22,31 @@
   import {Component} from 'vue-property-decorator';
   import typeList from '@/lib/typeList';
 
+
   @Component
   export default class Statistics extends Vue {
-    typeList = typeList;
     type = '-';
+    typeList = typeList;
+
+    created() {
+      this.$store.commit('fetchRecords');
+    }
+
+    tagString(tag: Tag[]) {
+      return tag.length === 0 ? '无' : tag.map(t => t.name).join('，');
+    }
 
     get recordList() {
-      return (this.$store.state as RootState).recordList;
+      return this.$store.state.recordList;
     }
+
 
     get result() {
       const {recordList} = this;
-      console.log(recordList);
       type HashTableValue = { title: string; items: RecordItem[] }
       const hashTable: { [key: string]: HashTableValue } = {};
       for (let i = 0; i < recordList.length; i++) {
-        const [date] = recordList[i].createdAt!.split('T');
+        const [date, time] = recordList[i].createdAt.split('T');
         hashTable[date] = hashTable[date] || {title: date, items: []};
         hashTable[date].items.push(recordList[i]);
       }
@@ -47,23 +54,19 @@
       return hashTable;
     }
 
-    tagString(tags: Tag[]) {
-      return tags.length === 0 ? '无' : tags.map(t => t.name).join('，');
-    }
 
-    beforeCreate() {
-      this.$store.commit('fetchRecords');
-    }
   }
 </script>
 
 <style lang="scss" scoped>
+  @import "~@/assets/styles/helper.scss";
+
   %item {
     padding: 8px 16px;
     line-height: 24px;
     display: flex;
     justify-content: space-between;
-    align-content: center;
+    align-items: center;
   }
 
   .title {
@@ -71,8 +74,9 @@
   }
 
   .record {
-    background: white;
     @extend %item;
+    background: white;
+    border-bottom: 1px solid #e6e6e6;
   }
 
   .notes {
@@ -81,10 +85,9 @@
     color: #999;
   }
 
-
   ::v-deep li.stat-tabItem {
-    background: #c4c4c4;
     height: 48px;
+    font-family: $font-hei;
 
     &.selected {
       background: white;
@@ -94,5 +97,6 @@
       }
     }
   }
+
 </style>
 
