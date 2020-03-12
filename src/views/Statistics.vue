@@ -53,11 +53,9 @@
       const newList = clone(recordList)
         .filter((r: { type: string }) => r.type === this.type)
         .sort((a: { createdAt: string }, b: { createdAt: string }) => dayjs(b.createdAt).valueOf() - dayjs(a.createdAt).valueOf());
-      console.log('newList', newList);
 
       type Result = { title: string; total?: number; items: RecordItem[] }[]
       if (newList.length && newList.length > 0) {
-        console.log('hi');
         const result: Result = [{title: dayjs(newList[0].createdAt).format('YYYY-MM-DD'), items: [newList[0]]}];
         for (let i = 1; i < newList.length; i++) {
           const current = newList[i];

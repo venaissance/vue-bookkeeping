@@ -2,6 +2,9 @@ const path = require('path')
 
 // 以 vue@cli 的规则配置 svg loader
 module.exports = {
+  publicPath: process.env.NODE_ENV === 'production'
+    ? '/vue-bookkeeping/'
+    : '/',
   lintOnSave: false,
   chainWebpack: config => {
     const dir = path.resolve(__dirname, 'src/assets/icons')
