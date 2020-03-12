@@ -3,7 +3,7 @@ const path = require('path')
 // 以 vue@cli 的规则配置 svg loader
 module.exports = {
   publicPath: process.env.NODE_ENV === 'production'
-    ? '/vue-bookkeeping/'
+    ? '/vue-bookkeeping-preview/'
     : '/',
   lintOnSave: false,
   chainWebpack: config => {
