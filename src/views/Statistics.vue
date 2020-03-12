@@ -16,7 +16,7 @@
       </li>
     </ol>
     <div v-else class="noRecords">
-      主人太懒了，一条{{typeText}}都没有
+      主人太懒了，连一条{{type==='-'?'支出':'收入'}}记录都没有
     </div>
   </Layout>
 </template>
@@ -33,8 +33,6 @@
   export default class Statistics extends Vue {
     type = '-';
     typeList = typeList;
-    // TODO 收入支出为空时显示没有对应记录
-    typeText: string = this.type === '+' ? '收入' : '支出';
 
     created() {
       this.$store.commit('fetchRecords');
