@@ -1,16 +1,16 @@
 <template>
   <Layout>
-<!--    <Tab :dataSource="typeList" class-prefix="stat" :value.sync="type"/>-->
+    <!--    <Tab :dataSource="typeList" class-prefix="stat" :value.sync="type"/>-->
     <ol v-if="groupedList && groupedList.length > 0">
       <li v-for="(group, index) in groupedList" :key="index">
         <h3 class="title">{{beautify(group.title)}}
-          <span>￥{{group.total}}</span>
+          <span>变化{{group.total}}公斤</span>
         </h3>
         <ol>
           <li v-for="item in group.items" :key="item.id" class="record">
             <span>{{tagString(item.tags)}}</span>
             <span class="notes">{{item.notes}}</span>
-            <span>￥{{item.amount}}</span>
+            <span>{{item.amount}}公斤</span>
           </li>
         </ol>
       </li>
