@@ -1,7 +1,7 @@
 <template>
   <div class="tags">
     <div class="new">
-      <button @click="newTag">新增标签</button>
+      <button @click="newTag">新增状态</button>
     </div>
     <ul class="current">
       <li v-for="tag in tagList" :key="tag.id"
