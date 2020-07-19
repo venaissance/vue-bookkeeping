@@ -33,6 +33,7 @@ window.onload = function () {
 //   window.alert('最佳效果需要使用手机扫码查看哦~');
 //   const img = document.createElement('img');
 //   img.src = './qrcode.png';
+//   img.src = '/qrcode.png';
 //   img.style.position = 'fixed';
 //   img.style.left = '50%';
 //   img.style.top = '50%';
