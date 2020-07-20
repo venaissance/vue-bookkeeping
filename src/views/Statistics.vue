@@ -1,6 +1,7 @@
 <template>
   <Layout>
     <!--    <Tab :dataSource="typeList" class-prefix="stat" :value.sync="type"/>-->
+    <div class="header">体重变化</div>
     <div class="chart-wrapper" ref="chartWrapper">
       <vue-chart class="chart" :options="x"/>
     </div>
@@ -8,7 +9,7 @@
     <ol v-if="groupedList && groupedList.length > 0">
       <li v-for="(group, index) in groupedList" :key="index">
         <h3 class="title">{{beautify(group.title)}}
-          <span>变化{{group.total}}公斤</span>
+          <!--          <span>变化{{group.total}}公斤</span>-->
         </h3>
         <ol>
           <li v-for="item in group.items" :key="item.id" class="record">
@@ -32,6 +33,7 @@
   import dayjs from 'dayjs';
   import clone from '@/lib/clone';
   import VueChart from '@/components/VueChart.vue';
+  import _ from 'lodash';
 
   @Component({
     components: {VueChart}
@@ -40,44 +42,80 @@
     type = '-';
     typeList = typeList;
 
+
+    // TODO: 1.禁止页面滑动，下半部分才能滑动, 2. 默认选中空腹标签
+
     mounted() {
-      (this.$refs.chartWrapper as HTMLDivElement).scrollLeft = 9999;
+      // 初始滚动条滑到最右边
+      const div = (this.$refs.chartWrapper as HTMLDivElement);
+      div.scrollLeft = div.scrollWidth;
+    }
+
+    get y() {
+      const today = new Date();
+      const array = [];
+      for (let i = 0; i <= 29; ++i) {
+        // this.recordList = [{date: 7.20, value: 100}]
+        const dateString = dayjs(today).subtract(i, 'day').format('YYYY-MM-DD');
+        const found = _.find(this.recordList, {
+          createdAt: dateString
+        });
+        console.log(found);
+        array.push({date: dateString, value: found ? found.amount : 0});
+      }
+      array.sort((a, b) => {
+        if (a.date > b.date) return 1;
+        else if (a.date === b.date) return 0;
+        else return -1;
+      });
+      return array;
     }
 
     get x() {
+      const keys = this.y.map(item => item.date.substr(5));
+      const values = this.y.map(item => item.value);
       return {
         grid: {
-          left: 0,
-          right: 0
+          left: 10,
+          right: 30
         },
         xAxis: {
           type: 'category',
-          data: [
-            '1', '2', '3', '4', '5', '6', '7', '8', '9', '10',
-            '11', '12', '13', '14', '15', '16', '17', '18', '19', '20',
-            '21', '22', '23', '24', '25', '26', '27', '28', '29', '30',
-          ],
+          data: keys,
           axisTick: {alignWithLabel: true},
-          axisLine: {lineStyle: {color: '#666'}},
+          axisLine: {lineStyle: {color: 'rgba(98, 200, 168)'}},
         },
         yAxis: {
           type: 'value',
-          show: false,
+          show: true,
+          position: 'right',
+          name: '单位：公斤',
+          min: 50,
+          max: 100
         },
         series: [{
-          data: [
-            820, 932, 901, 934, 1290, 1330, 1320,
-            820, 932, 901, 934, 1290, 1330, 1320,
-            820, 932, 901, 934, 1290, 1330, 1320,
-            820, 932, 901, 934, 1290, 1330, 1320, 1, 2
-          ],
-          type: 'line'
+          symbol: 'circle',
+          data: values,
+          type: 'line',
+          smooth: true,
+          symbolSize: 12,
+          itemStyle: {
+            borderWidth: 1,
+            color: 'rgba(98, 200, 168)'
+          }
         }],
         tooltip: {
+          trigger: 'axis',
           show: true,
-          triggerOn: 'click',
           position: 'top',
-          formatter: '{c}'
+          triggerOn: 'click',
+          formatter: '{c} KG',
+          axisPointer: {
+            // 坐标轴指示器，坐标轴触发有效
+            type: 'line', // 默认为直线，可选为：'line' | 'shadow'
+            label: 'cross',
+            show: true,
+          },
         }
       };
     }
@@ -123,7 +161,6 @@
       } else {
         return [];
       }
-
     }
 
     beautify(date: string) {
@@ -181,11 +218,25 @@
   .chart {
     width: 430%;
     &-wrapper {
+      box-shadow: 0 0 3px rgba(0, 0, 0, 0.24);
       overflow: auto;
       &::-webkit-scrollbar { // 隐藏滚动条
         display: none;
       }
     }
+  }
+  .header {
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    min-height: 38px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    background: transparent;
+    font-family: $font-hei;
+    color: black;
   }
 
 

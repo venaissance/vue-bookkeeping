@@ -17,6 +17,12 @@
       }
       const chart = echarts.init(this.$refs.container as HTMLDivElement);
       chart.setOption(this.options);
+
+      chart.dispatchAction({
+        type: 'showTip',
+        seriesIndex: 0,  // 显示第几个series
+        dataIndex: 29 // 显示第几个数据
+      });
     }
   }
 </script>

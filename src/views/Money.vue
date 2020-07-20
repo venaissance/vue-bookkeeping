@@ -1,14 +1,13 @@
 <template>
   <Layout class-prefix="layout">
     <NumPad :value.sync="record.amount" @submit="onSaveRecord"/>
-    <Tab :value.sync="record.type" :data-source="typeList"/>
+    <!--    <Tab :value.sync="record.type" :data-source="typeList"/>-->
     <div class="createdAt">
       <FormItem type="date" field-name="日期" placeholder="在这里输入日期" :value.sync="record.createdAt"/>
     </div>
     <div class="notes">
-      <FormItem field-name="备注" placeholder="在这里输入备注" :value.sync="record.notes"/>
+      <FormItem field-name="备注" placeholder="写句话鼓励自己吧~" :value.sync="record.notes"/>
     </div>
-
     <Tags :value.sync="record.tags"/>
   </Layout>
 </template>
@@ -21,6 +20,7 @@
   import Tags from '@/components/Money/Tags.vue';
   import Button from '@/components/Button.vue';
   import typeList from '@/lib/typeList';
+  import dayjs from 'dayjs';
 
   @Component({
     components: {Button, FormItem, NumPad, Tags},
@@ -37,12 +37,8 @@
       type: '-',
       notes: '',
       tags: [],
-      createdAt: new Date().toISOString()
+      createdAt: dayjs(new Date()).format('YYYY-MM-DD')
     };
-
-    onUpdateNotes(value: string) {
-      this.record.notes = value;
-    }
 
     // 创建时获取记录
     created() {
@@ -50,7 +46,6 @@
     }
 
     onSaveRecord() {
-      // oldStore.createRecord(this.record);
       if (!this.record.tags || this.record.tags.length === 0) {
         window.alert('请至少选择一个状态哦~');
       } else {
@@ -74,6 +69,12 @@
   }
   .notes {
     padding: 12px 0;
+  }
+  .createdAt {
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    background: #f6c646;
   }
 </style>
 

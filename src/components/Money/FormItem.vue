@@ -36,6 +36,7 @@
     }
 
     x(isoString: string) {
+      console.log(dayjs(isoString).format('YYYY-MM-DD'));
       return dayjs(isoString).format('YYYY-MM-DD');
     }
   }

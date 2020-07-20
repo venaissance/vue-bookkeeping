@@ -59,5 +59,8 @@
     text-align: center;
     padding: 16px;
     margin-top: 44-16px;
+    > .createTag {
+      background: darken(#f6c646, 8%);
+    }
   }
 </style>

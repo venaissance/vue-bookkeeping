@@ -1,6 +1,10 @@
 <template>
   <div class="numpad">
-    <div class="output">{{output}}</div>
+    <div class="output">
+      <span>问君能有几斤重</span>
+
+      {{output}} KG
+    </div>
     <div class="buttons">
       <button @click="inputNum">1</button>
       <button @click="inputNum">2</button>
@@ -32,7 +36,7 @@
     inputNum(event: MouseEvent) {
       const button = (event.target as HTMLButtonElement);
       const input = button.textContent!;
-      if (this.output.length === 16) { return; }
+      if (this.output.length === 4) { return; }
       if (this.output === '0') {
         if ('0123456789'.indexOf(input) >= 0) {
           this.output = input;
@@ -76,9 +80,21 @@
       @extend %innerShadow;
       font-size: 36px;
       font-family: Consolas, monospace;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       text-align: right;
       padding: 9px 16px;
       height: 72px;
+      > span {
+        font-size: 14px;
+        display: block;
+        font-family: $font-hei;
+        color: #999;
+      }
+      &::after {
+        content: normal;
+      }
     }
     .buttons {
       @extend %clearFix;
