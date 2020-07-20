@@ -34,10 +34,9 @@ const store = new Vuex.Store({
     fetchTags(state) {
       state.tagList = JSON.parse(window.localStorage.getItem('tagList') || '[]');
       if (!state.tagList || state.tagList.length === 0) {
-        store.commit('createTag', '衣');
-        store.commit('createTag', '食');
-        store.commit('createTag', '住');
-        store.commit('createTag', '行');
+        store.commit('createTag', '空腹');
+        store.commit('createTag', '饱腹');
+        store.commit('createTag', '运动后');
       }
     },
     createTag(state, name: string) {
@@ -46,14 +45,14 @@ const store = new Vuex.Store({
         const names = state.tagList.map(item => item.name);
         if (names.indexOf(name) >= 0) {
           // state.createTagError = new Error('标签名重复了');
-          window.alert('输入的标签名已存在~');
+          window.alert('输入的状态名已存在~');
           return;
         }
         const id = createId().toString();
         state.tagList.push({id, name: name});
         store.commit('saveTags');
       } else {
-        window.alert('标签名不能为空');
+        window.alert('状态名不能为空');
       }
     },
     updateTag(state, payload: { id: string; name: string }) {
@@ -62,7 +61,7 @@ const store = new Vuex.Store({
       if (idList.indexOf(id) >= 0) {
         const names = state.tagList.map(item => item.name);
         if (names.indexOf(name) >= 0) {
-          window.alert('标签名重复了');
+          window.alert('状态名重复了');
         } else {
           const tag = state.tagList.filter(item => item.id === id)[0];
           tag.name = name;

@@ -1,4 +1,4 @@
 export default Object.freeze([
-  {text: '收入', value: '+'},
-  {text: '支出', value: '-'}
+  {text: '胖了', value: '+'},
+  {text: '瘦了', value: '-'}
 ]);

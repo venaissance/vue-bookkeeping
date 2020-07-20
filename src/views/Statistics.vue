@@ -1,22 +1,22 @@
 <template>
   <Layout>
-    <Tab :dataSource="typeList" class-prefix="stat" :value.sync="type"/>
+    <!--    <Tab :dataSource="typeList" class-prefix="stat" :value.sync="type"/>-->
     <ol v-if="groupedList && groupedList.length > 0">
       <li v-for="(group, index) in groupedList" :key="index">
         <h3 class="title">{{beautify(group.title)}}
-          <span>￥{{group.total}}</span>
+          <span>变化{{group.total}}公斤</span>
         </h3>
         <ol>
           <li v-for="item in group.items" :key="item.id" class="record">
             <span>{{tagString(item.tags)}}</span>
             <span class="notes">{{item.notes}}</span>
-            <span>￥{{item.amount}}</span>
+            <span>{{item.amount}}公斤</span>
           </li>
         </ol>
       </li>
     </ol>
     <div v-else class="noRecords">
-      主人太懒了，连一条{{type==='-'?'支出':'收入'}}记录都没有
+      <!--      主人太懒了，连一条{{type==='-'?'支出':'收入'}}记录都没有-->
     </div>
   </Layout>
 </template>
@@ -33,6 +33,8 @@
   export default class Statistics extends Vue {
     type = '-';
     typeList = typeList;
+
+    //TODO: Echarts 显示体重折线图
 
     created() {
       this.$store.commit('fetchRecords');
@@ -96,26 +98,20 @@
 
 <style lang="scss" scoped>
   @import "~@/assets/styles/helper.scss";
-
   ::v-deep li.stat-tabItem {
     height: 48px;
     font-family: $font-hei;
-
     &.selected {
       background: white;
-
       &::after {
         display: none;
       }
     }
   }
-
   .noRecords {
     text-align: center;
     padding: 50px 20px;
-
   }
-
   %item {
     padding: 8px 16px;
     line-height: 24px;
@@ -123,17 +119,14 @@
     justify-content: space-between;
     align-items: center;
   }
-
   .title {
     @extend %item;
   }
-
   .record {
     @extend %item;
     background: white;
     border-bottom: 1px solid #e6e6e6;
   }
-
   .notes {
     margin-right: auto;
     margin-left: 16px;
