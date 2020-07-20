@@ -2,9 +2,13 @@
   <Layout class-prefix="layout">
     <NumPad :value.sync="record.amount" @submit="onSaveRecord"/>
     <Tab :value.sync="record.type" :data-source="typeList"/>
-    <div class="notes">
-      <FormItem field-name="备注" placeholder="在这里输入备注" @update:value="onUpdateNotes"/>
+    <div class="createdAt">
+      <FormItem type="date" field-name="日期" placeholder="在这里输入日期" :value.sync="record.createdAt"/>
     </div>
+    <div class="notes">
+      <FormItem field-name="备注" placeholder="在这里输入备注" :value.sync="record.notes"/>
+    </div>
+
     <Tags :value.sync="record.tags"/>
   </Layout>
 </template>
@@ -32,7 +36,8 @@
       amount: 0,
       type: '-',
       notes: '',
-      tags: []
+      tags: [],
+      createdAt: new Date().toISOString()
     };
 
     onUpdateNotes(value: string) {
