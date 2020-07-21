@@ -1,15 +1,15 @@
 <template>
   <Layout>
     <div class="navBar">
-      <Icon class="leftIcon" name="left" @click.native="goBack"></Icon>
+      <Icon class="leftIcon" name="left" @click.native="goBack"/>
       <span class="title">编辑标签</span>
-      <span class="rightIcon"></span>
+      <span class="rightIcon"/>
     </div>
     <div class="form-wrapper">
       <FormItem :value="currentTag.name"
                 @update:value="update"
                 field-name="标签名"
-                placeholder="请输入标签名"></FormItem>
+                placeholder="请输入标签名"/>
     </div>
     <div class="button-wrapper">
       <Button @click="remove">删除标签</Button>

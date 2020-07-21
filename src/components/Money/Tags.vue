@@ -20,17 +20,22 @@
   @Component
   export default class Tags extends mixins(TagHelper) {
     get tagList() {
+      // [{"id":"1","name":"空腹"},{"id":"2","name":"饱腹"},{"id":"3","name":"运动后"}]
       return this.$store.state.tagList;
     }
 
     selectedTags: string[] = [];
 
+    // TODO: 默认选中空腹
     toggle(tag: string) {
+      // console.log(this.tagList[0].name);
       const index = this.selectedTags.indexOf(tag);
+      console.log(this.selectedTags);
       if (index >= 0) {
         this.selectedTags.splice(index, 1);
       } else {
         this.selectedTags.push(tag);
+        // console.log(this.selectedTags[index]);
       }
       this.$emit('update:value', this.selectedTags);
     }
@@ -47,11 +52,9 @@
     display: flex;
     flex-grow: 1;
     flex-direction: column-reverse;
-
     .current {
       display: flex;
       flex-wrap: wrap;
-
       > li {
         $bg: #d9d9d9;
         $h: 24px;
@@ -62,17 +65,14 @@
         margin-right: 12px;
         margin-top: 4px;
         background: $bg;
-
         &.selected {
           background: darken($bg, 30%);
           color: white;
         }
       }
     }
-
     .new {
       margin-top: 16px;
-
       > button {
         border: none;
         background: transparent;

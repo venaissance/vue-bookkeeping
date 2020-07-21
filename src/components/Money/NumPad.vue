@@ -1,7 +1,7 @@
 <template>
   <div class="numpad">
     <div class="output">
-      <span>问君能有几斤重</span>
+      <span>今天瘦了没？</span>
 
       {{output}} KG
     </div>
@@ -35,6 +35,7 @@
 
     inputNum(event: MouseEvent) {
       const button = (event.target as HTMLButtonElement);
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       const input = button.textContent!;
       if (this.output.length === 4) { return; }
       if (this.output === '0') {

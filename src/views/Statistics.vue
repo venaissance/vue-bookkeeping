@@ -1,28 +1,31 @@
 <template>
-  <Layout>
+  <Layout class="page">
     <!--    <Tab :dataSource="typeList" class-prefix="stat" :value.sync="type"/>-->
     <div class="header">体重变化</div>
     <div class="chart-wrapper" ref="chartWrapper">
-      <vue-chart class="chart" :options="x"/>
+      <vue-chart class="chart" :options="chartOptions"/>
     </div>
 
-    <ol v-if="groupedList && groupedList.length > 0">
-      <li v-for="(group, index) in groupedList" :key="index">
-        <h3 class="title">{{beautify(group.title)}}
-          <!--          <span>变化{{group.total}}公斤</span>-->
-        </h3>
-        <ol>
-          <li v-for="item in group.items" :key="item.id" class="record">
-            <span>{{tagString(item.tags)}}</span>
-            <span class="notes">{{item.notes}}</span>
-            <span>{{item.amount}}公斤</span>
-          </li>
-        </ol>
-      </li>
-    </ol>
-    <div v-else class="noRecords">
-      <!--      主人太懒了，连一条{{type==='-'?'支出':'收入'}}记录都没有-->
+    <div class="details">
+      <ol v-if="groupedList && groupedList.length > 0">
+        <li v-for="(group, index) in groupedList" :key="index">
+          <h3 class="title">{{beautify(group.title)}}
+            <!--          <span>变化{{group.total}}公斤</span>-->
+          </h3>
+          <ol>
+            <li v-for="item in group.items" :key="item.id" class="record">
+              <span>{{tagString(item.tags)}}</span>
+              <span class="notes">{{item.notes}}</span>
+              <span>{{item.amount}}公斤</span>
+            </li>
+          </ol>
+        </li>
+      </ol>
+      <div v-else class="noRecords">
+        <!--      主人太懒了，连一条{{type==='-'?'支出':'收入'}}记录都没有-->
+      </div>
     </div>
+
   </Layout>
 </template>
 
@@ -51,7 +54,7 @@
       div.scrollLeft = div.scrollWidth;
     }
 
-    get y() {
+    get chartDataList() {
       const today = new Date();
       const array = [];
       for (let i = 0; i <= 29; ++i) {
@@ -71,9 +74,9 @@
       return array;
     }
 
-    get x() {
-      const keys = this.y.map(item => item.date.substr(5));
-      const values = this.y.map(item => item.value);
+    get chartOptions() {
+      const keys = this.chartDataList.map(item => item.date.substr(5));
+      const values = this.chartDataList.map(item => item.value);
       return {
         grid: {
           left: 10,
@@ -91,7 +94,8 @@
           position: 'right',
           name: '单位：公斤',
           min: 50,
-          max: 100
+          max: 100,
+          axisLine: {lineStyle: {color: 'rgba(98, 200, 168)'}},
         },
         series: [{
           symbol: 'circle',
@@ -181,6 +185,12 @@
 
 <style lang="scss" scoped>
   @import "~@/assets/styles/helper.scss";
+  .page {
+    overflow: hidden;
+  }
+  .details {
+    overflow: auto;
+  }
   ::v-deep li.stat-tabItem {
     height: 48px;
     font-family: $font-hei;
@@ -229,6 +239,7 @@
     position: fixed;
     top: 0;
     width: 100vw;
+    max-width: 500px;
     min-height: 38px;
     display: flex;
     justify-content: center;

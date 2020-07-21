@@ -3,7 +3,7 @@
     <NumPad :value.sync="record.amount" @submit="onSaveRecord"/>
     <!--    <Tab :value.sync="record.type" :data-source="typeList"/>-->
     <div class="createdAt">
-      <FormItem type="date" field-name="日期" placeholder="在这里输入日期" :value.sync="record.createdAt"/>
+      <FormItem type="date" field-name="日期选择" :value.sync="record.createdAt"/>
     </div>
     <div class="notes">
       <FormItem field-name="备注" placeholder="写句话鼓励自己吧~" :value.sync="record.notes"/>
@@ -63,6 +63,7 @@
 </script>
 
 <style lang="scss">
+
   .layout-content {
     display: flex;
     flex-direction: column-reverse;
@@ -74,6 +75,7 @@
     position: fixed;
     top: 0;
     width: 100vw;
+    max-width: 500px;
     background: #f6c646;
   }
 </style>

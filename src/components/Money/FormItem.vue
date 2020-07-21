@@ -4,7 +4,7 @@
       <span class="name">{{fieldName}}</span>
       <template v-if="type === 'date'">
         <input :type="type" :placeholder="placeholder"
-               :value="x(value)"
+               :value="dateReformat(value)"
                @input="onValueChanged($event.target.value)"
         />
       </template>
@@ -35,7 +35,7 @@
       this.$emit('update:value', value);
     }
 
-    x(isoString: string) {
+    dateReformat(isoString: string) {
       console.log(dayjs(isoString).format('YYYY-MM-DD'));
       return dayjs(isoString).format('YYYY-MM-DD');
     }
