@@ -45,9 +45,6 @@
     type = '-';
     typeList = typeList;
 
-
-    // TODO: 1.禁止页面滑动，下半部分才能滑动, 2. 默认选中空腹标签
-
     mounted() {
       // 初始滚动条滑到最右边
       const div = (this.$refs.chartWrapper as HTMLDivElement);

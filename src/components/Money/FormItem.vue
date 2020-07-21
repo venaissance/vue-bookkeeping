@@ -36,7 +36,10 @@
     }
 
     dateReformat(isoString: string) {
-      console.log(dayjs(isoString).format('YYYY-MM-DD'));
+      if (dayjs(isoString).isAfter(dayjs())) {
+        window.alert('难道你能预知未来？');
+        return dayjs().format('YYYY-MM-DD');
+      }
       return dayjs(isoString).format('YYYY-MM-DD');
     }
   }
