@@ -43,6 +43,9 @@
 </script>
 
 <style lang="scss" scoped>
+  input {
+    color: #fff;
+  }
   .formItem {
     font-size: 14px;
     display: flex;

@@ -13,7 +13,7 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-size: 16px;
-    color: #333;
+    color: #313131;
     background: #f5f5f5;
   }
   #app {

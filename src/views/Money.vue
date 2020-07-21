@@ -76,7 +76,9 @@
     top: 0;
     width: 100vw;
     max-width: 500px;
-    background: #f6c646;
+    /*background: #f6c646;*/
+    background: #009bff;
+    color: #fff;
   }
 </style>
 

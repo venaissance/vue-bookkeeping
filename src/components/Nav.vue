@@ -44,7 +44,8 @@
     }
 
     > .item.selected {
-      color: #f6c646;
+      color: #009bff;
+      /*color: #f6c646;*/
     }
   }
 

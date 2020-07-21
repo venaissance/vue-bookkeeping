@@ -86,7 +86,12 @@
           type: 'category',
           data: keys,
           axisTick: {alignWithLabel: true},
-          axisLine: {lineStyle: {color: 'rgba(98, 200, 168)'}},
+          axisLine: {
+            lineStyle: {
+              // color: 'rgba(98, 200, 168)'
+              color: '#009bff'
+            }
+          },
         },
         yAxis: {
           type: 'value',
@@ -95,7 +100,12 @@
           name: '单位：公斤',
           min: 50,
           max: 100,
-          axisLine: {lineStyle: {color: 'rgba(98, 200, 168)'}},
+          axisLine: {
+            lineStyle: {
+              // color: 'rgba(98, 200, 168)'
+              color: '#009bff'
+            }
+          },
         },
         series: [{
           symbol: 'circle',
@@ -105,7 +115,8 @@
           symbolSize: 12,
           itemStyle: {
             borderWidth: 1,
-            color: 'rgba(98, 200, 168)'
+            // color: 'rgba(98, 200, 168)'
+            color: '#009bff'
           }
         }],
         tooltip: {
