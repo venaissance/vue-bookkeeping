@@ -3,12 +3,12 @@
     <NumPad :value.sync="record.amount" @submit="onSaveRecord"/>
     <!--    <Tab :value.sync="record.type" :data-source="typeList"/>-->
     <div class="createdAt">
-      <FormItem type="date" field-name="日期选择" :value.sync="record.createdAt"/>
+      <FormItem class="datePicker" type="date" field-name="日期选择" :value.sync="record.createdAt"/>
     </div>
     <div class="notes">
       <FormItem field-name="备注" placeholder="写句话鼓励自己吧~" :value.sync="record.notes"/>
     </div>
-    <Tags :value.sync="record.tags"/>
+    <Tags :value.sync="record.tag"/>
   </Layout>
 </template>
 
@@ -28,6 +28,11 @@
   export default class Money extends Vue {
     typeList = typeList;
 
+    get tagList() {
+      // [{"id":"1","name":"空腹"},{"id":"2","name":"饱腹"},{"id":"3","name":"运动后"}]
+      return this.$store.state.tagList;
+    }
+
     get recordList() {
       return this.$store.state.recordList;
     }
@@ -36,18 +41,32 @@
       amount: 0,
       type: '-',
       notes: '',
-      tags: [],
+      tag: {id: '', name: ''},
       createdAt: dayjs(new Date()).format('YYYY-MM-DD')
     };
 
     // 创建时获取记录
     created() {
+      this.$store.commit('fetchTags');
       this.$store.commit('fetchRecords');
+      this.record.tag = this.tagList[0];
+    }
+
+    testDuplicate(record: RecordItem) {
+      let flag = false;
+      this.recordList.forEach((r: RecordItem) => {
+        if (r.createdAt === record.createdAt && JSON.stringify(r.tag) === JSON.stringify(record.tag)) {
+          flag = true;
+        }
+      });
+      return flag;
     }
 
     onSaveRecord() {
-      if (!this.record.tags || this.record.tags.length === 0) {
-        window.alert('请至少选择一个状态哦~');
+      if (this.testDuplicate(this.record)) {
+        window.alert('已经记录过了哟');
+      } else if (this.record.amount <= 40) {
+        window.alert('这么轻，一定是你输错了吧');
       } else {
         this.$store.commit('createRecord', this.record);
         window.alert('体重记录成功，请前往底部导航-数据跟踪查看记录，记得要坚持每天记录哦~');
@@ -56,7 +75,6 @@
 
     @Watch('recordList')
     onRecordListChange() {
-      // oldStore.saveRecords();
       this.$store.commit('saveRecords');
     }
   }
@@ -80,6 +98,7 @@
     background: #009bff;
     color: #fff;
   }
+
 </style>
 
 <style lang="scss" scoped>

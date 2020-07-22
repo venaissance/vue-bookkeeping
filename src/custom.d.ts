@@ -2,8 +2,8 @@ type RecordItem = {
   amount: number;
   type: string;
   notes: string;
-  tags: Tag[];
-  createdAt?: string; // 不强制初始化
+  tag: Tag;
+  createdAt: string; // 不强制初始化
 }
 
 type RootState = {

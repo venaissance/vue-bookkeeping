@@ -29,6 +29,8 @@ const store = new Vuex.Store({
     // Tags
     setCurrentTag(state, id: string) {
       store.commit('fetchTags');
+      console.log('tagList');
+      console.log(state.tagList);
       state.currentTag = state.tagList.filter((t: { id: string }) => t.id === id)[0];
     },
     fetchTags(state) {
@@ -44,7 +46,6 @@ const store = new Vuex.Store({
         // state.createTagError = null;
         const names = state.tagList.map(item => item.name);
         if (names.indexOf(name) >= 0) {
-          // state.createTagError = new Error('标签名重复了');
           window.alert('输入的状态名已存在~');
           return;
         }

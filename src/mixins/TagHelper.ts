@@ -10,7 +10,7 @@ export class TagHelper extends Vue {
   }
 
   newTag() {
-    const name = window.prompt('请输入标签名');
+    const name = window.prompt('请输入状态名');
     this.$store.commit('createTag', name);
   }
 

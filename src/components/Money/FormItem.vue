@@ -3,7 +3,7 @@
     <label class="formItem">
       <span class="name">{{fieldName}}</span>
       <template v-if="type === 'date'">
-        <input :type="type" :placeholder="placeholder"
+        <input class="datePicker" :type="type" :placeholder="placeholder"
                :value="dateReformat(value)"
                @input="onValueChanged($event.target.value)"
         />
@@ -46,9 +46,6 @@
 </script>
 
 <style lang="scss" scoped>
-  input {
-    color: #fff;
-  }
   .formItem {
     font-size: 14px;
     display: flex;
@@ -63,6 +60,9 @@
       flex-grow: 1;
       height: 40px;
       padding-right: 16px;
+    }
+    .datePicker {
+      color: #fff;
     }
   }
 

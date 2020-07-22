@@ -5,7 +5,7 @@
     </div>
     <ul class="current">
       <li v-for="tag in tagList" :key="tag.id"
-          :class="{selected: selectedTags.indexOf(tag) >= 0}"
+          :class="{selected: selectedTag === tag}"
           @click="toggle(tag)">{{tag.name}}
       </li>
     </ul>
@@ -24,20 +24,15 @@
       return this.$store.state.tagList;
     }
 
-    selectedTags: string[] = [];
+    selectedTag = {};
 
-    // TODO: 默认选中空腹
+    created() {
+      this.selectedTag = this.tagList[0];
+    }
+
     toggle(tag: string) {
-      // console.log(this.tagList[0].name);
-      const index = this.selectedTags.indexOf(tag);
-      console.log(this.selectedTags);
-      if (index >= 0) {
-        this.selectedTags.splice(index, 1);
-      } else {
-        this.selectedTags.push(tag);
-        // console.log(this.selectedTags[index]);
-      }
-      this.$emit('update:value', this.selectedTags);
+      this.selectedTag = tag;
+      this.$emit('update:value', this.selectedTag);
     }
   }
 </script>

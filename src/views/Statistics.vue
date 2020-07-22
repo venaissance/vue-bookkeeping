@@ -14,9 +14,9 @@
           </h3>
           <ol>
             <li v-for="item in group.items" :key="item.id" class="record">
-              <span>{{tagString(item.tags)}}</span>
+              <span>{{tagString(item.tag)}}</span>
               <span class="notes">{{item.notes}}</span>
-              <span>{{item.amount}}公斤</span>
+              <span>{{item.amount}} 公斤</span>
             </li>
           </ol>
         </li>
@@ -60,7 +60,6 @@
         const found = _.find(this.recordList, {
           createdAt: dateString
         });
-        console.log(found);
         array.push({date: dateString, value: found ? found.amount : 0});
       }
       array.sort((a, b) => {
@@ -136,8 +135,9 @@
       this.$store.commit('fetchRecords');
     }
 
-    tagString(tag: Tag[]) {
-      return tag.length === 0 ? '无' : tag.map(t => t.name).join('，');
+    tagString(tag: Tag) {
+      return tag ? tag.name : '无';
+      // return tag.length === 0 ? '无' : tag.map(t => t.name).join('，');
     }
 
     get recordList() {
