@@ -95,7 +95,8 @@
     width: 100vw;
     max-width: 500px;
     /*background: #f6c646;*/
-    background: #009bff;
+    /*background: #009bff;*/
+    background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);;
     color: #fff;
   }
 

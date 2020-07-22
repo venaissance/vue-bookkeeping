@@ -225,8 +225,9 @@
   }
   .record {
     @extend %item;
-    background: white;
+    /*background: white;*/
     border-bottom: 1px solid #e6e6e6;
+    background-color: #f5f5f5;
   }
   .notes {
     margin-right: auto;
@@ -236,8 +237,10 @@
   .chart {
     width: 430%;
     &-wrapper {
-      box-shadow: 0 0 3px rgba(0, 0, 0, 0.24);
+      /*box-shadow: 0 0 3px rgba(0, 0, 0, 0.24);*/
       overflow: auto;
+      border-bottom: 1px solid #f5f5f5;
+      margin-top: 20px;
       &::-webkit-scrollbar { // 隐藏滚动条
         display: none;
       }
@@ -252,10 +255,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 20px;
-    background: transparent;
+    font-size: 18px;
+    font-weight: 300;
+    /*background: transparent;*/
+    background-image: radial-gradient(circle 248px at center, #16d9e3 0%, #30c7ec 47%, #46aef7 100%);
     font-family: $font-hei;
     color: black;
+    box-shadow: $shadow;
   }
 
 

@@ -15,14 +15,17 @@
 </script>
 
 <style lang="scss" scoped>
+  Nav {
+    /*background-color: #fff;*/
+  }
   .layout-wrapper {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
   }
-
   .content {
     flex-grow: 1;
     overflow: auto;
+    background-color: #fff;
   }
 </style>
