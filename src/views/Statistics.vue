@@ -1,30 +1,34 @@
 <template>
-  <Layout class="page">
-    <!--    <Tab :dataSource="typeList" class-prefix="stat" :value.sync="type"/>-->
-    <div class="header">体重变化</div>
-    <div class="chart-wrapper" ref="chartWrapper">
-      <vue-chart class="chart" :options="chartOptions"/>
-    </div>
+  <Layout class-prefix="stat">
 
-    <div class="details">
-      <ol v-if="groupedList && groupedList.length > 0">
-        <li v-for="(group, index) in groupedList" :key="index">
-          <h3 class="title">{{beautify(group.title)}}
-            <!--          <span>变化{{group.total}}公斤</span>-->
-          </h3>
-          <ol>
-            <li v-for="item in group.items" :key="item.id" class="record">
-              <span>{{tagString(item.tag)}}</span>
-              <span class="notes">{{item.notes}}</span>
-              <span>{{item.amount}} 公斤</span>
-            </li>
-          </ol>
-        </li>
-      </ol>
-      <div v-else class="noRecords">
-        <!--      主人太懒了，连一条{{type==='-'?'支出':'收入'}}记录都没有-->
+    <div class="header">体重变化</div>
+    <section class="zone">
+      <div class="chart-wrapper" ref="chartWrapper">
+        <vue-chart class="chart" :options="chartOptions"/>
       </div>
-    </div>
+    </section>
+
+    <section class="zone">
+      <div class="details">
+        <ol v-if="groupedList && groupedList.length > 0">
+          <li v-for="(group, index) in groupedList" :key="index">
+            <h3 class="title">{{beautify(group.title)}}
+              <!--          <span>变化{{group.total}}公斤</span>-->
+            </h3>
+            <ol>
+              <li v-for="item in group.items" :key="item.id" class="record">
+                <span>{{tagString(item.tag)}}</span>
+                <span class="notes">{{item.notes}}</span>
+                <span>{{item.amount}} 公斤</span>
+              </li>
+            </ol>
+          </li>
+        </ol>
+        <div v-else class="noRecords">
+          <!--      主人太懒了，连一条{{type==='-'?'支出':'收入'}}记录都没有-->
+        </div>
+      </div>
+    </section>
 
   </Layout>
 </template>
@@ -76,7 +80,7 @@
       return {
         grid: {
           left: 10,
-          right: 30
+          right: 40
         },
         xAxis: {
           type: 'category',
@@ -193,8 +197,10 @@
 
 <style lang="scss" scoped>
   @import "~@/assets/styles/helper.scss";
-  .page {
-    overflow: hidden;
+  .stat-content .content {
+    overflow: hidden !important;
+    border: 1px solid blue;
+    background: linear-gradient(to bottom, #16d9e3 30%, #f7f7f7 30%);
   }
   .details {
     overflow: auto;
@@ -256,12 +262,18 @@
     justify-content: center;
     align-items: center;
     font-size: 18px;
-    font-weight: 300;
-    /*background: transparent;*/
-    background-image: radial-gradient(circle 248px at center, #16d9e3 0%, #30c7ec 47%, #46aef7 100%);
+    background: transparent;
+    /*background-image: radial-gradient(circle 248px at center, #16d9e3 0%, #30c7ec 47%, #46aef7 100%);*/
     font-family: $font-hei;
-    color: black;
-    box-shadow: $shadow;
+    color: white;
+  }
+  section {
+    border-radius: 20px;
+    background: #fff;
+    margin: 20px 20px;
+    padding: 20px 10px;
+    box-shadow: 0 0 2px #000;
+    border: 1px solid red;
   }
 
 

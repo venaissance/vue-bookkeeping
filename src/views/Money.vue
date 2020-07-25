@@ -66,7 +66,9 @@
       if (this.testDuplicate(this.record)) {
         window.alert('已经记录过了哟');
       } else if (this.record.amount <= 40) {
-        window.alert('这么轻，一定是你输错了吧');
+        window.alert('这么轻，一定是输错了吧');
+      } else if (this.record.amount > 100) {
+        window.alert('这么重，一定是输错了吧');
       } else {
         this.$store.commit('createRecord', this.record);
         window.alert('体重记录成功，请前往底部导航-数据跟踪查看记录，记得要坚持每天记录哦~');
